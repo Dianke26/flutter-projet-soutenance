@@ -1,0 +1,10 @@
+$kind: collection
+description: "Avant lancement : choisir une image dans T2, et regler medicament_libre_id, medicament_ordonnance_id et medicament_ordonnance_autre_id (voir variables). Lancer toute la collection (Run) dans l'ordre."
+variables:
+  base_url: http://127.0.0.1:8000
+  token_patient: ""
+  token_pharmacien: ""
+  ordonnance_id: ""
+  medicament_libre_id: "1"
+  medicament_ordonnance_id: "2"
+  medicament_ordonnance_autre_id: "3"

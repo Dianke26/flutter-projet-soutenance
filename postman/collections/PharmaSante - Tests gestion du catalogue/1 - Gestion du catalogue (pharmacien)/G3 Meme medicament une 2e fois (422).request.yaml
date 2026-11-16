@@ -1,0 +1,26 @@
+$kind: http-request
+url: "{{base_url}}/api/gestion/medicaments"
+method: POST
+headers:
+  Accept: application/json
+  Authorization: Bearer {{token_pharmacien}}
+body:
+  type: formdata
+  content:
+    - type: text
+      key: nom
+      value: "{{nom_medicament}}"
+    - type: text
+      key: dosage
+      value: 500 mg
+    - type: text
+      key: prix
+      value: "1500"
+    - type: text
+      key: necessite_ordonnance
+      value: "0"
+scripts:
+  - type: afterResponse
+    code: pm.test('Doublon refuse (422)',()=>pm.response.to.have.status(422));
+    language: text/javascript
+order: 3000

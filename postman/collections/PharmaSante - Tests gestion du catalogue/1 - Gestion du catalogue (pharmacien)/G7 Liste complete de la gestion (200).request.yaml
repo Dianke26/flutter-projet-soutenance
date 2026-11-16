@@ -1,0 +1,14 @@
+$kind: http-request
+url: "{{base_url}}/api/gestion/medicaments"
+method: GET
+headers:
+  Accept: application/json
+  Authorization: Bearer {{token_pharmacien}}
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Liste (200)',()=>pm.response.to.have.status(200));
+      const id=Number(pm.collectionVariables.get('medicament_id'));
+      pm.test('Le nouveau medicament est dans la liste',()=>pm.expect(pm.response.json().some(m=>m.id===id)).to.eql(true));
+    language: text/javascript
+order: 7000

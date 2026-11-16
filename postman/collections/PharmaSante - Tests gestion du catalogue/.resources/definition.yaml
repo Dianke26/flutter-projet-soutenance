@@ -1,0 +1,14 @@
+$kind: collection
+description: ""
+variables:
+  base_url: http://187.126.0.25:8082
+  email_pharmacien: pharmacien@test.sn
+  mdp_pharmacien: password123
+  email_patient: patient@test.sn
+  mdp_patient: password123
+  token_pharmacien: ""
+  token_patient: ""
+  pharmacie_id: ""
+  medicament_id: ""
+  nom_pharmacie: ""
+  nom_medicament: ""

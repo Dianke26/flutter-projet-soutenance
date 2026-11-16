@@ -1,0 +1,43 @@
+$kind: http-request
+url: "{{base_url}}/api/gestion/medicaments"
+method: POST
+headers:
+  Accept: application/json
+  Authorization: Bearer {{token_pharmacien}}
+body:
+  type: formdata
+  content:
+    - type: text
+      key: nom
+      value: "{{nom_medicament}}"
+    - type: text
+      key: description
+      value: Medicament ajoute depuis la gestion du catalogue
+    - type: text
+      key: forme
+      value: Comprime
+    - type: text
+      key: dosage
+      value: 500 mg
+    - type: text
+      key: prix
+      value: "1500"
+    - type: text
+      key: necessite_ordonnance
+      value: "0"
+    - type: text
+      key: categorie
+      value: Douleur & fievre
+    - type: file
+      key: image
+      src: []
+scripts:
+  - type: beforeRequest
+    code: pm.collectionVariables.set('nom_medicament','Test Gestion '+Date.now());
+    language: text/javascript
+  - type: afterResponse
+    code: |-
+      pm.test('Medicament cree (201)',()=>pm.response.to.have.status(201));
+      pm.collectionVariables.set('medicament_id',pm.response.json().id);
+    language: text/javascript
+order: 2000

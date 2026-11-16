@@ -1,0 +1,27 @@
+$kind: http-request
+url: "{{base_url}}/api/ordonnances"
+method: POST
+headers:
+  Accept: application/json
+body:
+  type: formdata
+  content:
+    - type: file
+      key: image
+      src: []
+    - type: text
+      key: note
+      value: Test Postman
+auth:
+  type: bearer
+  credentials:
+    token: "{{token_patient}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      var j = pm.response.json();
+      pm.test('Statut 201', function(){ pm.response.to.have.status(201); });
+      if (j && j.id) { pm.collectionVariables.set('ordonnance_id', j.id); }
+      pm.test('Statut EN_ATTENTE', function(){ pm.expect(j.statut).to.eql('EN_ATTENTE'); });
+    language: text/javascript
+order: 1000

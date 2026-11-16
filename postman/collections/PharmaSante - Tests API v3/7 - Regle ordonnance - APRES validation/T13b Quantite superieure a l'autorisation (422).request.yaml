@@ -1,0 +1,25 @@
+$kind: http-request
+url: "{{base_url}}/api/commande"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "adresse_livraison": "Dakar",
+      "lignes": [ { "medicament_id": "{{medicament_ordonnance_id}}", "quantite": 5 } ]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{token_patient}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Statut 422', function(){ pm.response.to.have.status(422); });
+      var j = pm.response.json();
+      pm.test('Code metier attendu : MEDICAMENT_NON_AUTORISE', function(){ pm.expect(["MEDICAMENT_NON_AUTORISE"]).to.include(j.code); });
+    language: text/javascript
+order: 1000

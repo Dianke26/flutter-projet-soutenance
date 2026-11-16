@@ -1,0 +1,26 @@
+$kind: http-request
+url: "{{base_url}}/api/gestion/pharmacies"
+method: POST
+headers:
+  Accept: application/json
+  Authorization: Bearer {{token_pharmacien}}
+body:
+  type: json
+  content: |-
+    {
+      "nom": "{{nom_pharmacie}}",
+      "quartier": "Plateau",
+      "adresse": "Avenue de test",
+      "telephone": "33 000 00 99",
+      "pharmacien_nom": "Dr Test"
+    }
+scripts:
+  - type: beforeRequest
+    code: pm.collectionVariables.set('nom_pharmacie','Pharmacie Test '+Date.now());
+    language: text/javascript
+  - type: afterResponse
+    code: |-
+      pm.test('Pharmacie creee (201)',()=>pm.response.to.have.status(201));
+      pm.collectionVariables.set('pharmacie_id',pm.response.json().id);
+    language: text/javascript
+order: 1000

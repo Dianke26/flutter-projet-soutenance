@@ -1,0 +1,20 @@
+$kind: http-request
+url: "{{base_url}}/api/gestion/medicaments"
+method: POST
+headers:
+  Accept: application/json
+  Authorization: Bearer {{token_pharmacien}}
+body:
+  type: formdata
+  content:
+    - type: text
+      key: nom
+      value: Sans prix
+    - type: text
+      key: necessite_ordonnance
+      value: "0"
+scripts:
+  - type: afterResponse
+    code: pm.test('Champ obligatoire manquant (422)',()=>pm.response.to.have.status(422));
+    language: text/javascript
+order: 4000

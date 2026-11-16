@@ -1,0 +1,24 @@
+$kind: http-request
+url: "{{base_url}}/api/login"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "email": "patient@test.sn",
+      "password": "password123"
+    }
+auth:
+  type: noauth
+scripts:
+  - type: afterResponse
+    code: |-
+      var j = pm.response.json();
+      pm.test('Statut 200', function(){ pm.response.to.have.status(200); });
+      pm.test('Token recu', function(){ pm.expect(j.token).to.be.a('string'); });
+      if (j.token) { pm.collectionVariables.set('token_patient', j.token); }
+    language: text/javascript
+order: 1000

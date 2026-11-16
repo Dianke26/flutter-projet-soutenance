@@ -1,0 +1,16 @@
+# Use this workspace to collaborate
+workspace:
+  id: 5448551e-0f59-4788-8de9-58314adb3e81
+
+# Each entry here maps a local resource to one or more corresponding objects in Postman Cloud
+
+cloudResources:
+  collections:
+    ../postman/collections/PharmaSante - Tests API v3: fcdf67d6-681e-48c6-a60c-4838273ade07
+    ../postman/collections/PharmaSante - Tests gestion du catalogue: 2048abd4-e96d-4525-b2eb-c6cd6c703427
+
+# All resources in the `postman/` folder are automatically registered in Local View.
+# Point to additional files outside the `postman/` folder to register them individually. Example:
+#localResources:
+#  collections:
+#    - ../tests/E2E Test Collection/

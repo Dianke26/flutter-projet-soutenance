@@ -1,0 +1,22 @@
+$kind: http-request
+url: "{{base_url}}/api/login"
+method: POST
+headers:
+  Accept: application/json
+body:
+  type: json
+  content: |-
+    {
+      "email": "{{email_pharmacien}}",
+      "password": "{{mdp_pharmacien}}"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      const j=pm.response.json();
+      pm.test('Connexion OK (200)',()=>pm.response.to.have.status(200));
+      const t=j.token||j.access_token;
+      pm.test('Jeton reçu',()=>pm.expect(t).to.be.a('string'));
+      pm.collectionVariables.set('token_pharmacien',t);
+    language: text/javascript
+order: 1000

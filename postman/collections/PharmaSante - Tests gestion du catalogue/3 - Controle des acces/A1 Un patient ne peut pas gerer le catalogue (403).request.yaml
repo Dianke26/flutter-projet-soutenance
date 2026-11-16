@@ -1,0 +1,19 @@
+$kind: http-request
+url: "{{base_url}}/api/gestion/stocks"
+method: POST
+headers:
+  Accept: application/json
+  Authorization: Bearer {{token_patient}}
+body:
+  type: json
+  content: |-
+    {
+      "pharmacie_id": "{{pharmacie_id}}",
+      "medicament_id": "{{medicament_id}}",
+      "quantite": 1
+    }
+scripts:
+  - type: afterResponse
+    code: pm.test('Patient refuse (403)',()=>pm.response.to.have.status(403));
+    language: text/javascript
+order: 1000

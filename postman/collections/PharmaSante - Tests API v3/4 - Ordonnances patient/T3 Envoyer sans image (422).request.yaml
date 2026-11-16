@@ -1,0 +1,20 @@
+$kind: http-request
+url: "{{base_url}}/api/ordonnances"
+method: POST
+headers:
+  Accept: application/json
+body:
+  type: formdata
+  content:
+    - type: text
+      key: note
+      value: sans image
+auth:
+  type: bearer
+  credentials:
+    token: "{{token_patient}}"
+scripts:
+  - type: afterResponse
+    code: pm.test('Statut 422', function(){ pm.response.to.have.status(422); });
+    language: text/javascript
+order: 2000
